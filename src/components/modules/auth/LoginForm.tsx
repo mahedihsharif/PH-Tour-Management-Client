@@ -9,15 +9,17 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Password from "@/components/ui/Password";
+import config from "@/config";
+import { IAuthError } from "@/constants/error.constant";
 import { cn } from "@/lib/utils";
 import { useLoginMutation } from "@/redux/features/auth/auth.api";
 import { errorResponse } from "@/utils/errorResponse";
+import { loginSchema } from "@/validation/auth.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
 import type z from "zod";
-import { loginSchema } from "./authValidation";
 
 export function LoginForm({
   className,
@@ -25,23 +27,32 @@ export function LoginForm({
 }: React.HTMLAttributes<HTMLDivElement>) {
   const navigate = useNavigate();
   const [login] = useLoginMutation();
-
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: "mahedi5061@gmail.com",
+      password: "Mahedi118@#",
     },
   });
   const onSubmit = async (data: z.infer<typeof loginSchema>) => {
     try {
       const res = await login(data).unwrap();
+      console.log(res);
+
+      navigate("/");
     } catch (error) {
       if (error) {
         const err = errorResponse(error);
-        if (err && err.status === 401) {
+
+        if (err && err.data.type === IAuthError.NOT_FOUND) {
+          toast.error(err && err.data.message);
+        } else if (err && err.data.type === IAuthError.NOT_VERIFIED) {
           toast.error(err && err.data.message);
           navigate("/verify", { state: data.email });
+        } else if (err && err.data.type === IAuthError.UNAUTHORIZED) {
+          toast.error(err && err.data.message);
+        } else {
+          toast.error("Something went to wrong!");
         }
       }
     }
@@ -90,7 +101,7 @@ export function LoginForm({
               )}
             />
 
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full cursor-pointer">
               Login
             </Button>
           </form>
@@ -106,6 +117,7 @@ export function LoginForm({
           type="button"
           variant="outline"
           className="w-full cursor-pointer"
+          onClick={() => window.open(`${config.baseUrl}/auth/google`)}
         >
           Login with Google
         </Button>
