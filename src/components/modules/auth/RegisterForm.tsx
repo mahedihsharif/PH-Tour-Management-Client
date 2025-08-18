@@ -13,12 +13,12 @@ import Password from "@/components/ui/Password";
 import { cn } from "@/lib/utils";
 import { useRegisterMutation } from "@/redux/features/auth/auth.api";
 import { errorResponse } from "@/utils/errorResponse";
+import { registerSchema } from "@/validation/auth.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
 import { z } from "zod";
-import { registerSchema } from "./authValidation";
 
 export function RegisterForm({
   className,

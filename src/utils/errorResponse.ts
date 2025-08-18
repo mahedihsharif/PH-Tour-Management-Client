@@ -1,4 +1,4 @@
-import type { IErrorResponse } from "@/interface/error.interface";
+import type { IErrorResponse } from "@/types";
 import type { SerializedError } from "@reduxjs/toolkit";
 import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 
