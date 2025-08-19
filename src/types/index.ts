@@ -1,3 +1,4 @@
+import type { ComponentType } from "react";
 import type { IErrorData } from "./error.type.ts";
 
 export type {
@@ -8,6 +9,7 @@ export type {
   IUserResponseData,
   IVerifyOtp,
 } from "./auth.type.ts";
+export type { ITourTypeData, ITourTypeResponse } from "./tour.type.ts";
 
 export interface IResponse<T> {
   success: boolean;
@@ -19,3 +21,14 @@ export interface IErrorResponse {
   data: IErrorData;
   status: number;
 }
+
+export interface ISidebarItem {
+  title: string;
+  items: {
+    title: string;
+    url: string;
+    component: ComponentType;
+  }[];
+}
+
+export type TRole = "SUPER_ADMIN" | "ADMIN" | "USER";

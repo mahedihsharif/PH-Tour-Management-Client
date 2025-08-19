@@ -11,9 +11,9 @@ import { Input } from "@/components/ui/input";
 import Password from "@/components/ui/Password";
 import config from "@/config";
 import { IAuthError } from "@/constants/error.constant";
+import { globalErrorResponse } from "@/helpers/errors/globalError";
 import { cn } from "@/lib/utils";
 import { useLoginMutation } from "@/redux/features/auth/auth.api";
-import { errorResponse } from "@/utils/errorResponse";
 import { loginSchema } from "@/validation/auth.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -42,7 +42,7 @@ export function LoginForm({
       navigate("/");
     } catch (error) {
       if (error) {
-        const err = errorResponse(error);
+        const err = globalErrorResponse(error);
 
         if (err && err.data.type === IAuthError.NOT_FOUND) {
           toast.error(err && err.data.message);
