@@ -10,9 +10,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Password from "@/components/ui/Password";
+import { globalErrorResponse } from "@/helpers/errors/globalError";
 import { cn } from "@/lib/utils";
 import { useRegisterMutation } from "@/redux/features/auth/auth.api";
-import { errorResponse } from "@/utils/errorResponse";
+
 import { registerSchema } from "@/validation/auth.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -49,7 +50,7 @@ export function RegisterForm({
       navigate("/verify");
     } catch (error) {
       if (error) {
-        const err = errorResponse(error);
+        const err = globalErrorResponse(error);
         toast.error(err && err.data.message);
       }
     }

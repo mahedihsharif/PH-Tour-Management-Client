@@ -46,7 +46,7 @@ export const authApi = baseApi.injectEndpoints({
         data: otpInfo,
       }),
     }),
-    userInfo: builder.query({
+    userInfo: builder.query<IResponse<IUserResponseData>, undefined>({
       query: () => ({
         url: "/user/me",
         method: "GET",
