@@ -1,3 +1,4 @@
+import { DeleteConfirmation } from "@/components/DeleteConfirmation";
 import AddTourTypeModal from "@/components/modules/admin/tourtype/AddTourTypeModal";
 import { Button } from "@/components/ui/button";
 import {
@@ -8,12 +9,21 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useGetTourTypesQuery } from "@/redux/features/tour/tour.api";
+import {
+  useGetTourTypesQuery,
+  useRemoveTourTypeMutation,
+} from "@/redux/features/tour/tour.api";
 import type { TourTypeData } from "@/types/tour.type";
 import { Trash2 } from "lucide-react";
 
 const AddTourType = () => {
   const { data } = useGetTourTypesQuery(undefined);
+
+  const [removeTourType] = useRemoveTourTypeMutation();
+
+  const handleRemoveTourType = async (tourId: string) => {
+    return await removeTourType(tourId).unwrap();
+  };
 
   return (
     <div className="w-full max-w-7xl mx-auto px-5">
@@ -36,9 +46,14 @@ const AddTourType = () => {
                   {item?.name}
                 </TableCell>
                 <TableCell>
-                  <Button size="sm">
-                    <Trash2 />
-                  </Button>
+                  <DeleteConfirmation
+                    id={item._id}
+                    onConfirm={handleRemoveTourType}
+                  >
+                    <Button size="sm" className="cursor-pointer">
+                      <Trash2 />
+                    </Button>
+                  </DeleteConfirmation>
                 </TableCell>
               </TableRow>
             ))}

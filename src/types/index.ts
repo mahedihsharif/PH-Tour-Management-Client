@@ -9,7 +9,12 @@ export type {
   IUserResponseData,
   IVerifyOtp,
 } from "./auth.type.ts";
-export type { ITourTypeData, ITourTypeResponse } from "./tour.type.ts";
+export type { IDivisionResponse } from "./division.type.ts";
+export type {
+  ITourData,
+  ITourTypeData,
+  ITourTypeResponse,
+} from "./tour.type.ts";
 
 export interface IResponse<T> {
   success: boolean;

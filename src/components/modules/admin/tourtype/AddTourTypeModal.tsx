@@ -21,11 +21,13 @@ import { globalErrorResponse } from "@/helpers/errors/globalError";
 import { useAddTourTypeMutation } from "@/redux/features/tour/tour.api";
 import { tourTypeZodSchema } from "@/validation/tour.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import type z from "zod";
 
 const AddTourTypeModal = () => {
+  const [open, setOpen] = useState(false);
   const form = useForm<z.infer<typeof tourTypeZodSchema>>({
     resolver: zodResolver(tourTypeZodSchema),
     defaultValues: {
@@ -39,6 +41,7 @@ const AddTourTypeModal = () => {
       const res = await addTourType({ name: data.name }).unwrap();
       if (res.success) {
         toast.success(res.message);
+        setOpen(!open);
       }
     } catch (error) {
       if (error) {
@@ -49,7 +52,7 @@ const AddTourTypeModal = () => {
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <form>
         <DialogTrigger asChild>
           <Button className="cursor-pointer">Add Tour Type</Button>
