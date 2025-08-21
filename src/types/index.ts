@@ -11,6 +11,7 @@ export type {
 } from "./auth.type.ts";
 export type { IDivisionResponse } from "./division.type.ts";
 export type {
+  IResponseTourTypeData,
   ITourData,
   ITourTypeData,
   ITourTypeResponse,
@@ -37,3 +38,8 @@ export interface ISidebarItem {
 }
 
 export type TRole = "SUPER_ADMIN" | "ADMIN" | "USER";
+
+export interface IParams {
+  _id: string;
+  fields: string;
+}

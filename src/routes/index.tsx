@@ -11,6 +11,12 @@ const About = lazy(() => import("@/pages/About"));
 const Login = lazy(() => import("@/pages/Login"));
 const Register = lazy(() => import("@/pages/Register"));
 const UnAuthorized = lazy(() => import("@/pages/UnAuthorized"));
+const Homepage = lazy(() => import("@/pages/HomePage"));
+const Booking = lazy(() => import("@/pages/Booking"));
+const TourDetails = lazy(() => import("@/pages/TourDetails"));
+const Tours = lazy(() => import("@/pages/Tour"));
+const Success = lazy(() => import("@/pages/payment/Success"));
+const Fail = lazy(() => import("@/pages/payment/Fail"));
 const Verify = lazy(() => import("@/pages/About"));
 const DashboardLayout = lazy(
   () => import("@/components/layout/DashboardLayout")
@@ -22,8 +28,24 @@ export const router = createBrowserRouter([
     path: "/",
     children: [
       {
+        Component: Homepage,
+        index: true,
+      },
+      {
+        Component: Tours,
+        path: "tours",
+      },
+      {
+        Component: TourDetails,
+        path: "tours/:id",
+      },
+      {
         Component: withAuth(About),
         path: "about",
+      },
+      {
+        Component: withAuth(Booking),
+        path: "booking/:id",
       },
     ],
   },
@@ -58,5 +80,13 @@ export const router = createBrowserRouter([
   {
     Component: UnAuthorized,
     path: "/unauthorized",
+  },
+  {
+    Component: Success,
+    path: "/payment/success",
+  },
+  {
+    Component: Fail,
+    path: "/payment/fail",
   },
 ]);
