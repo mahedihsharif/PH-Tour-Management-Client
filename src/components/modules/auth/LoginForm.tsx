@@ -37,7 +37,6 @@ export function LoginForm({
   const onSubmit = async (data: z.infer<typeof loginSchema>) => {
     try {
       const res = await login(data).unwrap();
-      console.log(res);
 
       navigate("/");
     } catch (error) {
